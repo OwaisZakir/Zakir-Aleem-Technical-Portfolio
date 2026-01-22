@@ -1,6 +1,12 @@
-import { Shield, Wrench, Zap, Users } from "lucide-react";
+import { Shield, Wrench, Zap, Users, ArrowRight } from "lucide-react";
+import AnimatedSection from "./AnimatedSection";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
 
 const SummarySection = () => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+
   const highlights = [
     {
       icon: Wrench,
@@ -25,49 +31,75 @@ const SummarySection = () => {
   ];
 
   return (
-    <section className="py-20 lg:py-28 bg-background">
-      <div className="container px-6">
-        <div className="max-w-4xl mx-auto">
+    <section ref={ref} className="py-28 lg:py-40 bg-background relative overflow-hidden">
+      {/* Subtle gradient mesh background */}
+      <div className="absolute inset-0 bg-gradient-mesh" />
+      
+      <div className="container px-6 relative z-10">
+        <div className="max-w-6xl mx-auto">
           {/* Section header */}
-          <div className="text-center mb-12">
-            <p className="text-accent font-semibold tracking-wider uppercase text-sm mb-3">
+          <AnimatedSection className="text-center mb-20">
+            <span className="inline-block text-accent font-medium tracking-wider uppercase text-sm mb-4">
               Professional Profile
-            </p>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
-              Professional Summary
+            </span>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold text-foreground mb-6">
+              About Me
             </h2>
-            <div className="w-20 h-1 bg-accent mx-auto" />
-          </div>
+            <motion.div 
+              className="w-24 h-1 bg-accent mx-auto rounded-full"
+              initial={{ scaleX: 0 }}
+              animate={isInView ? { scaleX: 1 } : {}}
+              transition={{ duration: 0.8, delay: 0.3 }}
+            />
+          </AnimatedSection>
 
-          {/* Summary text */}
-          <div className="bg-card rounded-2xl p-8 md:p-10 shadow-lg border border-border mb-16">
-            <p className="text-lg md:text-xl text-foreground/80 leading-relaxed text-center">
-              A results-driven <span className="font-semibold text-foreground">Mechanical & Technical Supervisor</span> with 
-              over <span className="font-semibold text-accent">15 years of progressive experience</span> in 
-              industrial operations, facilities management, and technical systems maintenance. 
-              Demonstrated expertise in managing complex mechanical and electrical infrastructure 
-              across diverse sectors including <span className="font-medium">CNG plants, hospitals, RO water treatment 
-              facilities, and power generation systems</span>. Known for ensuring operational 
-              continuity, implementing safety protocols, and leading cross-functional teams to 
-              deliver reliable, efficient technical solutions.
-            </p>
-          </div>
+          {/* Summary card */}
+          <AnimatedSection delay={0.2} className="mb-20">
+            <div className="relative group">
+              <div className="absolute -inset-1 bg-gradient-to-r from-accent/20 via-accent/5 to-accent/20 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="relative glass rounded-3xl p-10 md:p-14">
+                <p className="text-xl md:text-2xl text-foreground/80 leading-relaxed text-center font-light">
+                  A results-driven <span className="font-semibold text-foreground">Mechanical & Technical Supervisor</span> with 
+                  over <span className="font-semibold text-accent">15 years of progressive experience</span> in 
+                  industrial operations, facilities management, and technical systems maintenance. 
+                </p>
+                <p className="text-lg md:text-xl text-muted-foreground leading-relaxed text-center mt-6">
+                  Demonstrated expertise in managing complex mechanical and electrical infrastructure 
+                  across diverse sectors including <span className="font-medium text-foreground/70">CNG plants, hospitals, RO water treatment 
+                  facilities, and power generation systems</span>.
+                </p>
+              </div>
+            </div>
+          </AnimatedSection>
 
           {/* Highlight cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {highlights.map((item, index) => (
-              <div
+              <AnimatedSection
                 key={index}
-                className="group flex items-start gap-4 p-6 rounded-xl bg-card border border-border hover:border-accent/50 hover:shadow-md transition-all duration-300"
+                delay={0.1 * index}
+                direction={index % 2 === 0 ? 'left' : 'right'}
               >
-                <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-primary flex items-center justify-center group-hover:bg-accent transition-colors duration-300">
-                  <item.icon className="h-6 w-6 text-primary-foreground" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-foreground mb-1">{item.title}</h3>
-                  <p className="text-muted-foreground text-sm">{item.description}</p>
-                </div>
-              </div>
+                <motion.div
+                  whileHover={{ y: -4, scale: 1.01 }}
+                  transition={{ duration: 0.3 }}
+                  className="group relative h-full"
+                >
+                  <div className="absolute inset-0 bg-accent/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="relative flex items-start gap-5 p-6 rounded-2xl glass h-full">
+                    <div className="flex-shrink-0 w-14 h-14 rounded-xl bg-primary flex items-center justify-center group-hover:bg-accent transition-colors duration-300">
+                      <item.icon className="h-7 w-7 text-primary-foreground" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-heading font-semibold text-lg text-foreground mb-2 flex items-center gap-2">
+                        {item.title}
+                        <ArrowRight className="h-4 w-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 text-accent" />
+                      </h3>
+                      <p className="text-muted-foreground leading-relaxed">{item.description}</p>
+                    </div>
+                  </div>
+                </motion.div>
+              </AnimatedSection>
             ))}
           </div>
         </div>
