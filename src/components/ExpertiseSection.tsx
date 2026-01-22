@@ -1,87 +1,14 @@
-import { Cog, Zap, Droplets, Sun, Building2, Gauge, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import AnimatedSection from "./AnimatedSection";
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
+import { usePortfolio } from "@/context/PortfolioContext";
 
 const ExpertiseSection = () => {
+  const { expertise } = usePortfolio();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-
-  const expertiseCategories = [
-    {
-      icon: Cog,
-      title: "Mechanical Systems",
-      color: "from-orange-500 to-red-500",
-      skills: [
-        "CNG Plant Operations & Maintenance",
-        "Compressor Systems & Reciprocating Equipment",
-        "HVAC Systems Installation & Maintenance",
-        "Hydraulic & Pneumatic Systems",
-        "Preventive Maintenance Planning",
-      ],
-    },
-    {
-      icon: Zap,
-      title: "Electrical Systems",
-      color: "from-yellow-500 to-orange-500",
-      skills: [
-        "VFD (Variable Frequency Drive) Configuration",
-        "Industrial Wiring & Panel Boards",
-        "Motor Control & Protection Systems",
-        "Electrical Safety Compliance",
-        "Power Distribution Systems",
-      ],
-    },
-    {
-      icon: Droplets,
-      title: "Water Systems",
-      color: "from-blue-500 to-cyan-500",
-      skills: [
-        "RO Plant Installation & Operation",
-        "Water Treatment & Purification",
-        "Pump Systems & Piping Networks",
-        "Quality Control & Testing",
-        "Membrane Maintenance & Replacement",
-      ],
-    },
-    {
-      icon: Sun,
-      title: "Energy Systems",
-      color: "from-amber-500 to-yellow-500",
-      skills: [
-        "Solar Power Installation",
-        "Diesel Generator Operations",
-        "Power Backup Systems",
-        "Energy Efficiency Optimization",
-        "UPS Systems & Battery Banks",
-      ],
-    },
-    {
-      icon: Building2,
-      title: "Facilities Management",
-      color: "from-emerald-500 to-teal-500",
-      skills: [
-        "Building Maintenance & Operations",
-        "Infrastructure Planning",
-        "Vendor & Contractor Management",
-        "Asset Lifecycle Management",
-        "Emergency Response Protocols",
-      ],
-    },
-    {
-      icon: Gauge,
-      title: "Technical Operations",
-      color: "from-violet-500 to-purple-500",
-      skills: [
-        "Equipment Troubleshooting & Diagnostics",
-        "Technical Documentation & Reporting",
-        "Safety Protocol Implementation",
-        "Inventory & Spare Parts Management",
-        "Team Training & Development",
-      ],
-    },
-  ];
 
   return (
     <section ref={ref} id="expertise" className="py-28 lg:py-40 bg-secondary/30 relative overflow-hidden">
@@ -112,7 +39,7 @@ const ExpertiseSection = () => {
 
         {/* Expertise grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {expertiseCategories.map((category, index) => (
+          {expertise.map((category, index) => (
             <AnimatedSection
               key={index}
               delay={0.1 * index}

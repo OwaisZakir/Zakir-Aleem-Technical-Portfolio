@@ -2,36 +2,12 @@ import { GraduationCap, Award, Languages, CheckCircle } from "lucide-react";
 import AnimatedSection from "./AnimatedSection";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import { usePortfolio } from "@/context/PortfolioContext";
 
 const EducationSection = () => {
+  const { education, certifications, languages } = usePortfolio();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-
-  const education = [
-    {
-      degree: "Diploma in Mechanical Engineering",
-      institution: "Technical Training Institute",
-      year: "2007",
-    },
-    {
-      degree: "Matriculation (Science)",
-      institution: "Board of Secondary Education",
-      year: "2004",
-    },
-  ];
-
-  const certifications = [
-    "CNG Plant Operations & Safety",
-    "Industrial Electrical Safety",
-    "HVAC Systems Certification",
-    "First Aid & Emergency Response",
-  ];
-
-  const languages = [
-    { name: "Urdu", level: "Native", percent: 100 },
-    { name: "English", level: "Professional", percent: 85 },
-    { name: "Punjabi", level: "Conversational", percent: 70 },
-  ];
 
   return (
     <section ref={ref} className="py-28 lg:py-40 bg-background relative overflow-hidden">

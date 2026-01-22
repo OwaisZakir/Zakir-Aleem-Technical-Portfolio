@@ -4,8 +4,10 @@ import { Button } from "@/components/ui/button";
 import AnimatedText from "./AnimatedText";
 import MagneticButton from "./MagneticButton";
 import { useRef } from 'react';
+import { usePortfolio } from "@/context/PortfolioContext";
 
 const HeroSection = () => {
+  const { personalInfo } = usePortfolio();
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -25,9 +27,9 @@ const HeroSection = () => {
   };
 
   const stats = [
-    { value: "15+", label: "Years Experience" },
-    { value: "50+", label: "Projects Delivered" },
-    { value: "6+", label: "Industries Served" },
+    { value: personalInfo.yearsExperience, label: "Years Experience" },
+    { value: personalInfo.projectsDelivered, label: "Projects Delivered" },
+    { value: personalInfo.industriesServed, label: "Industries Served" },
   ];
 
   return (
@@ -98,7 +100,7 @@ const HeroSection = () => {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-accent"></span>
               </span>
-              <span className="text-primary-foreground/80">Available for opportunities</span>
+              <span className="text-primary-foreground/80">{personalInfo.status}</span>
             </div>
           </motion.div>
 
@@ -112,14 +114,14 @@ const HeroSection = () => {
               className="inline-flex items-center gap-2 text-primary-foreground/60 mb-6"
             >
               <MapPin className="h-4 w-4" />
-              <span className="text-sm tracking-wide uppercase">Karachi, Pakistan</span>
+              <span className="text-sm tracking-wide uppercase">{personalInfo.location}</span>
             </motion.div>
 
             {/* Name */}
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-heading font-bold text-primary-foreground tracking-tight mb-4">
-              <AnimatedText text="Zakir" delay={0.3} />
+              <AnimatedText text={personalInfo.name} delay={0.3} />
               <span className="block text-accent">
-                <AnimatedText text="Aleem" delay={0.5} />
+                <AnimatedText text={personalInfo.lastName} delay={0.5} />
               </span>
             </h1>
 
@@ -130,7 +132,7 @@ const HeroSection = () => {
               transition={{ duration: 0.6, delay: 0.7 }}
               className="text-xl md:text-2xl text-primary-foreground/70 font-light mb-8 max-w-2xl mx-auto lg:mx-0"
             >
-              Mechanical & Technical Supervisor
+              {personalInfo.title}
             </motion.p>
 
             {/* Tagline */}
@@ -140,8 +142,12 @@ const HeroSection = () => {
               transition={{ duration: 0.6, delay: 0.9 }}
               className="text-lg text-primary-foreground/50 max-w-xl mx-auto lg:mx-0 mb-12 leading-relaxed"
             >
-              Engineering excellence through <span className="text-accent font-medium">15+ years</span> of 
-              technical leadership in CNG Plants, RO Systems, and Facilities Management.
+              {personalInfo.tagline.split('15+ years').map((part, i) => (
+                <span key={i}>
+                  {part}
+                  {i === 0 && <span className="text-accent font-medium">{personalInfo.yearsExperience} years</span>}
+                </span>
+              ))}
             </motion.p>
 
             {/* CTA Buttons */}

@@ -1,53 +1,12 @@
 import AnimatedSection from "./AnimatedSection";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import { usePortfolio } from "@/context/PortfolioContext";
 
 const SkillsSection = () => {
+  const { skillCategories } = usePortfolio();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-
-  const skillCategories = [
-    {
-      category: "Mechanical",
-      color: "from-orange-500 to-red-500",
-      skills: [
-        { name: "CNG Plant Operations", level: 95 },
-        { name: "Compressor Systems", level: 90 },
-        { name: "HVAC Systems", level: 85 },
-        { name: "Hydraulic Systems", level: 80 },
-      ],
-    },
-    {
-      category: "Electrical",
-      color: "from-yellow-500 to-orange-500",
-      skills: [
-        { name: "VFD Configuration", level: 90 },
-        { name: "Industrial Wiring", level: 85 },
-        { name: "Motor Controls", level: 88 },
-        { name: "Power Distribution", level: 82 },
-      ],
-    },
-    {
-      category: "Water Systems",
-      color: "from-blue-500 to-cyan-500",
-      skills: [
-        { name: "RO Plant Operations", level: 92 },
-        { name: "Water Treatment", level: 88 },
-        { name: "Pump Systems", level: 85 },
-        { name: "Quality Testing", level: 80 },
-      ],
-    },
-    {
-      category: "Energy Systems",
-      color: "from-emerald-500 to-teal-500",
-      skills: [
-        { name: "Solar Installation", level: 85 },
-        { name: "Generator Operations", level: 92 },
-        { name: "Power Backup", level: 88 },
-        { name: "UPS Systems", level: 82 },
-      ],
-    },
-  ];
 
   return (
     <section ref={ref} className="py-28 lg:py-40 bg-secondary/30 relative overflow-hidden">

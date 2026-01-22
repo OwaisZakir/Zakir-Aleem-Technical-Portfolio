@@ -2,56 +2,12 @@ import { Briefcase, Calendar, MapPin, ArrowRight } from "lucide-react";
 import AnimatedSection from "./AnimatedSection";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import { usePortfolio } from "@/context/PortfolioContext";
 
 const ExperienceSection = () => {
+  const { experiences } = usePortfolio();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-
-  const experiences = [
-    {
-      title: "Technical Supervisor",
-      company: "Industrial Facilities & CNG Plants",
-      location: "Karachi, Pakistan",
-      period: "2015 - Present",
-      current: true,
-      responsibilities: [
-        "Lead comprehensive maintenance operations for CNG compression systems, ensuring 99%+ uptime",
-        "Supervise installation and maintenance of RO water treatment plants with daily capacity of 50,000+ liters",
-        "Manage electrical systems including VFD drives, panel boards, and power distribution networks",
-        "Implement preventive maintenance schedules reducing equipment failures by 40%",
-        "Oversee solar power installations and integration with existing power systems",
-        "Coordinate with vendors and contractors for specialized equipment and services",
-      ],
-    },
-    {
-      title: "Mechanical Supervisor",
-      company: "Hospital & Healthcare Facilities",
-      location: "Karachi, Pakistan",
-      period: "2012 - 2015",
-      current: false,
-      responsibilities: [
-        "Managed critical HVAC systems ensuring optimal environmental conditions for patient care",
-        "Supervised generator operations providing uninterrupted power backup for medical equipment",
-        "Maintained water supply systems including pumping stations and storage facilities",
-        "Implemented safety protocols in compliance with healthcare facility standards",
-        "Led a team of 10+ technicians across multiple facility maintenance disciplines",
-      ],
-    },
-    {
-      title: "Maintenance Technician",
-      company: "Commercial & Industrial Sector",
-      location: "Karachi, Pakistan",
-      period: "2008 - 2012",
-      current: false,
-      responsibilities: [
-        "Performed troubleshooting and repairs on mechanical and electrical equipment",
-        "Assisted in installation of new machinery and equipment commissioning",
-        "Maintained detailed maintenance logs and equipment documentation",
-        "Participated in safety training and emergency response drills",
-        "Developed expertise in compressor systems, motors, and control panels",
-      ],
-    },
-  ];
 
   return (
     <section ref={ref} className="py-28 lg:py-40 bg-background relative overflow-hidden">
